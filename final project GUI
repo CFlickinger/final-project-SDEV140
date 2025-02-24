@@ -1,0 +1,62 @@
+"""Craig Flickinger
+02/15/25
+Module 6 Ex 9-5
+"""
+
+"""This program will use tkinter to make a gui that lets the user click on
+2 different video game systems then once a system is clicked will bring up another box
+to have the user select games or accessories"""
+
+
+import tkinter as tk
+from tkinter import messagebox
+
+# Create the main window
+root = tk.Tk()
+root.title("Please select which console you want to choose from")
+
+# Function to handle when a game system is selected
+def on_system_selected(system):
+    selection_window = tk.Toplevel(root)
+    selection_window.title(f"Select {system} Games or Accessories")
+
+    # Create labels and buttons for selecting either games or accessories
+    label = tk.Label(selection_window, text=f"Select either a Game or Accessory for the {system}")
+    label.pack()
+
+    # Button for selecting games
+    games_button = tk.Button(selection_window, text="Select Game", command=lambda: show_game_selection(selection_window, system))
+    games_button.pack(pady=5)
+
+    # Button for selecting accessories
+    accessories_button = tk.Button(selection_window, text="Select Accessory", command=lambda: show_accessory_selection(selection_window, system))
+    accessories_button.pack(pady=5)
+
+# Function to display game options
+def show_game_selection(selection_window, system):
+    game_window = tk.Toplevel(selection_window)
+    game_window.title(f"Select a Game for {system}")
+
+    games = ["Super Mario 64", "The Legend of Zelda: Ocarina of Time", "GoldenEye 007"]
+    for game in games:
+        button = tk.Button(game_window, text=game, command=lambda game=game: show_selection(game))
+        button.pack(pady=5)
+
+# Function to display accessory options
+def show_accessory_selection(selection_window, system):
+    accessory_window = tk.Toplevel(selection_window)
+    accessory_window.title(f"Select an Accessory for {system}")
+
+    accessories = ["N64 Controller"]
+    for accessory in accessories:
+        button = tk.Button(accessory_window, text=accessory, command=lambda accessory=accessory: show_selection(accessory))
+        button.pack(pady=5)
+
+def show_selection(item):
+    messagebox.showinfo("Selection", f"You selected: {item}")
+
+# Create buttons for the available systems
+n64_button = tk.Button(root, text="Nintendo 64", command=lambda: on_system_selected("Nintendo 64"))
+n64_button.pack(pady=10)
+
+root.mainloop()
